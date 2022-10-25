@@ -28,11 +28,9 @@ APIPWD = '2pfsnioo6cjRVs4PqVlPHKd2WRl47yndffIVqQpj'
 
 tradingClient = TradingClient(APIUSER, APIPWD)
 allAsset = tradingClient.get_all_assets()
-print("got assets")
+print("got assets:" + str(len(allAsset)))
 # get all stock symbols
 symbols = [json.loads(x.json())['symbol'] for x in allAsset]
-
-
 
 client = MongoClient('mongodb://137.112.104.220:27017')#433-23 2号机
 # client = pymongo.MongoClient('localhost', 27017)
@@ -42,17 +40,17 @@ company = db.Company
 
 def DownloadAllCompData():
     for x in allAsset:
-        print(x)
+        # print(x)
         xjson = json.loads(str(x.json()))
-        # producer.send('testtopic', {'aaa':'bbb'})
+
         finalData = {}
         finalData['Operation'] = 'CREATE'
         finalData['Group'] = 'COMPANY'
         finalData['JSONDATA'] = xjson
 
         mongoProducer.send('testtopic',finalData)
+    print('dataImportFinished')
 
-        # company.insert_one(xjson)
 
 def createIndex():
     company.drop_indexes()

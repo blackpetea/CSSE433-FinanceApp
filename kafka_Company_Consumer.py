@@ -1,37 +1,58 @@
+import pymongo
+from pymongo import errors
 from kafka import KafkaConsumer
+from kafka.structs import TopicPartition
 from pymongo import MongoClient
 import json
 consumer = KafkaConsumer(
-    'testtopic',
-    # auto_offset_reset='earliest', # 暂时不知道有什么用
+    # 'testtopic', # somehow assigning topic here not working for partition stuff
+    auto_offset_reset='earliest', # 暂时不知道有什么用
+    enable_auto_commit = True,# 暂时不知道有什么用
     bootstrap_servers=['localhost:9092'],
-    value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+    value_deserializer=lambda m: json.loads(m.decode('utf-8')),
+    group_id = 'the_only_group', # i think you guys will have different groups for influxdb
+    client_id = 'company_Create_Consumer' # name for this single consumer client
 )
+
+topic = TopicPartition('testtopic', 0) #0 is the partition, bad naming,
+consumer.assign([topic])
 
 client = MongoClient(host = ["localhost:27017"], serverSelectionTimeoutMS = 500)
 
+counter = 0
 
-while True:
-
-    try:#尝试去，ping mongo
-
-        client.MongoCompany.command('ping')
-        print("connection success")
+try:
+    print(str(type(client['company1'].company2.insert_one({"sd":"sds"}))))
+    # pymongo.results.InsertOneResult
 
 
-    except:
-        print("server down, connection error")
-        break; # 如果mongo 没反应，我就break
+except:
+    print("error")
 
-    msg = next(consumer)#如果 mongo 有反应，我就去consumer里拿下一个message
-
-    if(msg[6]['Operation'] == 'CREATE'): # 拿到了message 就可以insert到mongo里去了
-
-        client['company1'].company2.insert_one(msg[6]['JSONDATA'])
-
+# while True:
+#     #current-offset and log-end-offset
+#
+#     #if mongo insert failed, go back one offset(or save the offset temporarily)
+#     try:
+#
+#         if(client.company1.command('ping')['ok'] == 1.0):#尝试去，ping mongo
+#             msg = next(consumer)  # 如果 mongo 有反应，我就去consumer里拿下一个message， 最最重要的 一行
+#             # message = message.value # you can do this actually
+#             if (msg[6]['Operation'] == 'CREATE'):  # 拿到了message 就可以insert到mongo里去了
+#                 counter = counter + 1
+#                 print("insert success: " + str(counter))
+#
+#                 client['company1'].company2.insert_one(msg[6]['JSONDATA'])
+#
+#     # except pymongo.errors.ServerSelectionTimeoutError:# when can't insert due to shut down mongo
+#     #     print ("pymongo's mistake")
+#     #
+#
+#     except:
+#         print("server down, connection error")
 
 # print(type(message)) # message type 是一个tuple，要用数字index去access
-
+# message index:
 # 0: topic
 # 2: offset
 # 6: value (our json file)
