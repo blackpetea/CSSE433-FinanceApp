@@ -4,8 +4,8 @@ import time
 import json
 from kafka import KafkaProducer
 import time
-mongoProducer = KafkaProducer(bootstrap_servers = ['localhost:9092'], value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-# producer.send('testtopic', {'aaa':'bbb'})
+mongoProducer = KafkaProducer(bootstrap_servers = ['localhost:9092'], value_serializer=lambda v: json.dumps(v).encode('utf-8'), acks = 1)
+
 
 time.sleep(10)
 
@@ -39,6 +39,7 @@ db = client['company']
 company = db.Company
 
 def DownloadAllCompData():
+    count = 0
     for x in allAsset:
         # print(x)
         xjson = json.loads(str(x.json()))
@@ -48,8 +49,10 @@ def DownloadAllCompData():
         finalData['Group'] = 'COMPANY'
         finalData['JSONDATA'] = xjson
 
-        mongoProducer.send('testtopic',finalData)
+        mongoProducer.send('testtopic2',finalData)
+        count = count +1
     print('dataImportFinished')
+    print("producer count" + str(count))
 
 
 def createIndex():
