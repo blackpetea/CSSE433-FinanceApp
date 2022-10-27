@@ -78,5 +78,3 @@ while True:
 # print(type(message[6])) # dictionary
 # print(type(message[6]['JSONDATA']))# dictionary
 # print("row json: " + str(message[6]['JSONDATA']))
-
-
