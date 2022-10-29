@@ -25,6 +25,7 @@ topic = TopicPartition('testtopic2', 0) #0 is the partition, bad naming,
 consumer.assign([topic])
 
 client = MongoClient(host = ["localhost:27017"], serverSelectionTimeoutMS = 500)
+client['company1']['company2'].drop()
 
 counter = 0
 # mongoid = '635965a46689bbab7a886ee3'
@@ -45,8 +46,10 @@ while True:
             # message = message.value # you can do this actually
             if (msg[6]['Operation'] == 'CREATE'):  # 拿到了message 就可以insert到mongo里去了
                 counter = counter + 1
-                print("insert success: " + str(counter))
-                print("current topic position:" +str(consumer.position(topic)))
+                # print("insert success: " + str(counter))
+                if msg.offset%500 ==0:
+                    print("insert success: ", msg.offset)
+                    print("current topic position:" +str(consumer.position(topic)))
 
 
                 mongoid = client['company1'].company2.insert_one(msg[6]['JSONDATA'])
@@ -57,7 +60,7 @@ while True:
                     # print(str(client['company1'].company2.find_one({"_id" : ObjectId(mongoid)})))
                 except:
                     failList.append(msg[6]['JSONDATA']["id"])
-                print("failedList: " + str(failList))
+                # print("failedList: " + str(failList))
 
 
     # except pymongo.errors.ServerSelectionTimeoutError:# when can't insert due to shut down mongo
