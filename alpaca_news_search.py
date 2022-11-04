@@ -52,6 +52,7 @@ def get_stock_news_date(date):
             #       ", Author:", record['n']['author'], ", reported at time :", record['n']['created_at'])
             print_list.append("Summary: " + record['n']['summary'] + ", Source: " + record['n']['source']+
                   ", Author:" + record['n']['author'] + ", reported at time :"+ record['n']['created_at'])
+            print(record)
     return print_list
 
 # get_stock_news(symbol='NIO')

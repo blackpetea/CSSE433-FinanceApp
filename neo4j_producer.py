@@ -5,7 +5,7 @@ from neo4j import GraphDatabase
 import time
 
 driver = GraphDatabase.driver(encrypted=False, uri="bolt://localhost:7687",
-                              auth=("neo4j", "didisucks"))
+                              auth=("neo4j", "darthvader521"))
 
 session = driver.session()
 
@@ -39,6 +39,13 @@ def create_date_node(date):
     except Exception as e:
         print(e.code)
         print(e.message)
+
+def create_date_node_query_str(date):
+    query_str = "MERGE (d:Date {date: '%(date)s'}) \
+                    ON CREATE \
+                      SET d.date = '%(date)s'"%{"date":date}
+    time.sleep(0.01)
+    return query_str
 
 def create_news_node(newsID, author, created_at, source, summary, symbols, url):
     try:
@@ -164,9 +171,11 @@ for symbol in symbols:
         #                  source=source, summary=summary, symbols=symbols, url=url))
         # session.run(create_relationship_HAS_query_str(date=date, newsID=newsID))
 
-        producer.send('news_data', {'query_input': create_company_node_query_str(date)})
+        producer.send('news_data', {'query_input': create_company_node_query_str(symbol=symbol)})
         producer.send('news_data', {'query_input': create_news_node_query_str(newsID=newsID, author=author, created_at=created_at,
                          source=source, summary=summary, symbols=symbols, url=url)})
+        producer.send('news_data',
+                      {'query_input': create_date_node_query_str(date=date)})
         producer.send('news_data', {'query_input': create_relationship_HAS_query_str(date=date, newsID=newsID)})
 
 
@@ -179,4 +188,3 @@ for symbol in symbols:
 
         print("Inserted a news")
     time.sleep(1)
-

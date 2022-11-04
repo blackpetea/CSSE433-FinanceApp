@@ -10,10 +10,8 @@ from pymongo import MongoClient
 import json
 from neo4j import GraphDatabase
 
-# driver = GraphDatabase.driver(encrypted=False, uri="bolt://localhost:7687",
-#                               auth=("neo4j", "didisucks"))
-
-driver = GraphDatabase.driver(uri = "neo4j://localhost:7687", auth=("neo4j", "darthvader521"))
+driver = GraphDatabase.driver(encrypted=False, uri="bolt://localhost:7687",
+                              auth=("neo4j", "darthvader521"))
 
 session = driver.session()
 
@@ -49,7 +47,7 @@ while True:
                 # print(msg.value.get('query_input'))
                 session.run(msg.value.get('query_input'))
             except Exception as e:
-                print(e.code, e.message)
+                print(e)
             failed = False
         else:
             failed = True
@@ -57,9 +55,9 @@ while True:
             print("Neo4j server is down")
             time.sleep(1)
 
-    except:
-        current_offset = current_offset - 1
+    except Exception as e:
         failed = True
-        print("Break at offset (-1 means consumer does not consume anything):", current_offset)
+        # print("Break at offset (-1 means consumer does not consume anything):", current_offset)
         print("Connection error")
+        print(e)
         time.sleep(1)

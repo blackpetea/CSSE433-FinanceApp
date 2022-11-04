@@ -45,11 +45,15 @@ def newsSearchResult():
     # headings = ('Summary', 'Source', 'Author', 'Time')
     headings = ('News')
 
-    if str(form["newsDate"]) is None or str(form["newsDate"]) == '':
-        result = get_stock_news(symbol=form['newsSymbol'])
+    # print(form.get("newsDate"))
+    date_input = form.get("newsDate")
+    symbol_input = form.get("newsSymbol")
+    if date_input == '':
+        result = get_stock_news(symbol=symbol_input)
+    elif symbol_input != '':
+        result = get_stock_news(symbol=symbol_input, date=date_input)
     else:
-        result = get_stock_news(symbol=form['newsSymbol'], date=str(form["newsDate"]))
-    # result = get_stock_news(symbol='NIO', date= '2022-05-11')
+        result = get_stock_news_date(date=date_input)
 
     return render_template('NewsTable.html', data = result)
 
