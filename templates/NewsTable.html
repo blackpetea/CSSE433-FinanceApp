@@ -43,18 +43,14 @@
         <h1 class="display-5 fw-bold" style="margin-bottom: 20px">NEWS</h1>
         <table  style="margin-left:auto;margin-right:auto;width : 100%">
             <tr>
-                {% for header in headings %}
-                <th>{{ header }}</th>
-                {% endfor %}
+
+                <th>News</th>
+
             </tr>
             {% for row in data %}
             <tr>
 
-                <td>{{ row}}</td>
-<!--                <td>{{ row.Source }}</td>-->
-<!--                <td>{{ row.author }}</td>-->
-<!--                <td>{{ row.time }}</td>-->
-
+                <td>{{row}}</td>
 
             </tr>
             {% endfor%}

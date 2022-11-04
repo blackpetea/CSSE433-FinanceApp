@@ -43,20 +43,15 @@ def search_the_news():
 def newsSearchResult():
     form = request.form
     # headings = ('Summary', 'Source', 'Author', 'Time')
-    headings = ('News', '')
+    headings = ('News')
 
-    inputDic = {
-        'newsSymbol': form['newsSymbol'],
-        'newsDate': form["newsDate"]
-    }
+    if str(form["newsDate"]) is None or str(form["newsDate"]) == '':
+        result = get_stock_news(symbol=form['newsSymbol'])
+    else:
+        result = get_stock_news(symbol=form['newsSymbol'], date=str(form["newsDate"]))
+    # result = get_stock_news(symbol='NIO', date= '2022-05-11')
 
-    result = get_stock_news(inputDic['newsSymbol'])
-
-
-    for item in result:
-        print(item)
-        print("---------------------------------")
-    return render_template('NewsTable.html', headings = headings, data = result)
+    return render_template('NewsTable.html', data = result)
 
 
 @app.route("/get_stock")
