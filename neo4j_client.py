@@ -10,8 +10,10 @@ from pymongo import MongoClient
 import json
 from neo4j import GraphDatabase
 
-driver = GraphDatabase.driver(encrypted=False, uri="bolt://localhost:7687",
-                              auth=("neo4j", "didisucks"))
+# driver = GraphDatabase.driver(encrypted=False, uri="bolt://localhost:7687",
+#                               auth=("neo4j", "didisucks"))
+
+driver = GraphDatabase.driver(uri = "neo4j://localhost:7687", auth=("neo4j", "darthvader521"))
 
 session = driver.session()
 

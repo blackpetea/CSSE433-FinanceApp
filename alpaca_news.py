@@ -16,8 +16,9 @@ headers = { "APCA-API-KEY-ID": "PK4KNHN1288FU75AUBDI",
 data_url = "https://data.alpaca.markets"
 
 
-driver = GraphDatabase.driver(encrypted=False, uri="bolt://localhost:7687",
-                              auth=("neo4j", "didisucks"))
+# driver = GraphDatabase.driver(encrypted=False, uri="bolt://localhost:7687",
+#                               auth=("neo4j", "didisucks"))
+driver = GraphDatabase.driver(uri = "neo4j://localhost:7687", auth=("neo4j", "darthvader521"))
 session = driver.session()
 
 

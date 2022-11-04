@@ -1,8 +1,10 @@
 from neo4j import GraphDatabase
 import time
 
-driver = GraphDatabase.driver(encrypted=False, uri="bolt://localhost:7687",
-                              auth=("neo4j", "didisucks"))
+# driver = GraphDatabase.driver(encrypted=False, uri="bolt://localhost:7687",
+#                               auth=("neo4j", "didisucks"))
+
+driver = GraphDatabase.driver(uri = "neo4j://localhost:7687", auth=("neo4j", "darthvader521"))
 session = driver.session()
 
 def get_stock_news(symbol, date = None):
@@ -14,9 +16,9 @@ def get_stock_news(symbol, date = None):
         if len(val) != 0:
             print(f"[Searched News]")
             for record in val:
-                print("Sumarry: ", record['n']['summary'], ", Source: ", record['n']['source'],
+                print("Summary: ", record['n']['summary'], ", Source: ", record['n']['source'],
                       ", Author:", record['n']['author'], ", reported at time :", record['n']['created_at'])
-                print_list.append("Sumarry: " + record['n']['summary'] + ", Source: " + record['n']['source']+
+                print_list.append("Summary: " + record['n']['summary'] + ", Source: " + record['n']['source']+
                       ", Author:" + record['n']['author'] + ", reported at time :"+ record['n']['created_at'])
         return print_list
     else:
@@ -27,9 +29,9 @@ def get_stock_news(symbol, date = None):
         if len(val) != 0:
             print(f"[Searched News]")
             for record in val:
-                print("Sumarry: ", record['n']['summary'], ", Source: ", record['n']['source'],
+                print("Summary: ", record['n']['summary'], ", Source: ", record['n']['source'],
                       ", Author:", record['n']['author'], ", reported at time :", record['n']['created_at'])
-                print_list.append("Sumarry: " + record['n']['summary'] + ", Source: " + record['n']['source'] +
+                print_list.append("Summary: " + record['n']['summary'] + ", Source: " + record['n']['source'] +
                                   ", Author:" + record['n']['author'] + ", reported at time :" + record['n'][
                                       'created_at'])
         return print_list
@@ -45,12 +47,12 @@ def get_stock_news_date(date):
     if len(val) != 0:
         print(f"[Searched News]")
         for record in val:
-            print("Sumarry: ", record['n']['summary'], ", Source: ", record['n']['source'],
+            print("Summary: ", record['n']['summary'], ", Source: ", record['n']['source'],
                   ", Author:", record['n']['author'], ", reported at time :", record['n']['created_at'])
-            print_list.append("Sumarry: " + record['n']['summary'] + ", Source: " + record['n']['source']+
+            print_list.append("Summary: " + record['n']['summary'] + ", Source: " + record['n']['source']+
                   ", Author:" + record['n']['author'] + ", reported at time :"+ record['n']['created_at'])
     return print_list
 
-get_stock_news(symbol='NIO')
-get_stock_news_date(date='2022-05-11')
-get_stock_news(symbol='NIO', date= '2022-05-11')
+# get_stock_news(symbol='NIO')
+# get_stock_news_date(date='2022-05-11')
+# get_stock_news(symbol='NIO', date= '2022-05-11')

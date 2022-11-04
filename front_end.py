@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect
 from AllinOne import *
 from influx_loading_search_stock import *
+from alpaca_news_search import *
 
 app = Flask(__name__)
 
@@ -37,6 +38,25 @@ def CompanySearchResult():
 @app.route("/search_news")
 def search_the_news():
     return render_template('search_news.html')
+
+@app.route("/return_news", methods = ['GET', 'POST'])
+def newsSearchResult():
+    form = request.form
+    # headings = ('Summary', 'Source', 'Author', 'Time')
+    headings = ('News', '')
+
+    inputDic = {
+        'newsSymbol': form['newsSymbol'],
+        'newsDate': form["newsDate"]
+    }
+
+    result = get_stock_news(inputDic['newsSymbol'])
+
+
+    for item in result:
+        print(item)
+        print("---------------------------------")
+    return render_template('NewsTable.html', headings = headings, data = result)
 
 
 @app.route("/get_stock")

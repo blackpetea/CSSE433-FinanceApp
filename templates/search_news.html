@@ -35,25 +35,25 @@
   <div class="p-5 mb-4 bg-light rounded-3">
     <div class="container-fluid py-5">
       <h1 class="display-5 fw-bold text-center">Search News</h1>
-      <form id="form-signin" action="/api/signup" method="POST">
-        <label for="inputSymbol" class="sr-only">Symbol</label>
+      <form id="form-signin" action="/return_news" method="POST">
+        <label for="newsSymbol" class="sr-only">Symbol:</label>
         <input
-            type="name"
-            name="inputName"
-            id="inputName"
+            type="text"
+            name="newsSymbol"
+            id="newsSymbol"
             class="form-control"
-            placeholder="Symbol"
-            required
+            placeholder="newsSymbol"
+            unrequired
             autofocus
         />
-        <label for="inputSymbol" class="sr-only">Date</label>
+        <label for="form-signin-2" class="sr-only">Date:</label>
         <input
-            type="email"
-            name="inputEmail"
-            id="inputEmail"
+            type="text"
+            name="newsDate"
+            id="newsDate"
             class="form-control"
-            placeholder="Date"
-            required
+            placeholder="newsDate"
+            unrequired
             autofocus
         />
         <button
