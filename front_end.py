@@ -2,13 +2,12 @@ from flask import Flask, render_template, request, url_for, redirect
 from AllinOne import *
 from influx_loading_search_stock import *
 from alpaca_news_search import *
-
+from Config import *
 app = Flask(__name__)
 
 
 @app.route("/")
 def main():
-
     return render_template('index.html')
 
 
