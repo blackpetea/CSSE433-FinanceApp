@@ -35,40 +35,41 @@
   <div class="p-5 mb-4 bg-light rounded-3">
     <div class="container-fluid py-5">
       <h1 class="display-5 fw-bold text-center">Make a Market Order</h1>
-      <form id="form-signin" action="/api/signup" method="POST">
-        <label for="inputName" class="sr-only">Symbol</label>
+      <form id="form-signin" action="/submit_Order" method="POST">
+        <label for="tradeSymbol" class="sr-only">Symbol</label>
         <input
-            type="name"
-            name="inputName"
-            id="inputName"
+            type="text"
+            name="tradeSymbol"
+            id="tradeSymbol"
             class="form-control"
             placeholder="Symbol"
             required
             autofocus
         />
-        <label for="inputSymbol" class="sr-only">Position</label>
+        <label for="tradePosition" class="sr-only">Position</label>
         <input
-            type="email"
-            name="inputEmail"
-            id="inputEmail"
+            type="text"
+            name="tradePosition"
+            id="tradePosition"
             class="form-control"
             placeholder="Position"
             required
             autofocus
         />
-        <label for="inputExchange" class="sr-only">Number</label>
+        <label for="tradeNumber" class="sr-only">Number</label><br>
         <input
-            type="password"
-            name="inputPassword"
-            id="inputPassword"
+            type="text"
+            name="tradeNumber"
+            id="tradeNumber"
             class="form-control"
             placeholder="Number"
             required
+            autofocus
         />
         <button
             class="btn btn-lg btn-primary btn-block"
             type="submit">
-          Submit
+          Submit Order
         </button>
 
       </form>

@@ -4,7 +4,7 @@ from influx_loading_search_stock import *
 from alpaca_news_search import *
 from Config import *
 app = Flask(__name__)
-
+from alpaca.trading.client import TradingClient, OrderRequest
 
 @app.route("/")
 def main():
@@ -87,6 +87,36 @@ def StockSearchResult():
 @app.route("/make_order")
 def search_news():
     return render_template('make_order.html')
+
+
+@app.route("/submit_Order", methods = ['GET', 'POST'])
+def submit_Order():
+    form = request.form
+    print(str(form))
+    symbol = form['tradeSymbol']
+    position = form['tradePosition']
+    number = int(form['tradeNumber'])
+
+
+    API_NAME = 'PK4KNHN1288FU75AUBDI'
+    API_KEY = '2pfsnioo6cjRVs4PqVlPHKd2WRl47yndffIVqQpj'
+    trading_client = TradingClient(API_NAME, API_KEY)
+
+    order_request = OrderRequest(symbol=symbol, qty=number, side=position, type="market", time_in_force="day")
+    order_info = trading_client.submit_order(order_request)
+    order_info = order_info.dict()
+    account = trading_client.get_account()
+    acc = account.dict()
+    log_trade(acc, order_info, symbol)
+    # print("you submitted an order: SYMBOL: " + symbol +", POSITION: " + position + ",Number: " + number )
+    return render_template('make_order.html')
+
+
+
+
+
+
+
 
 
 
