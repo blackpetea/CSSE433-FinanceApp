@@ -12,7 +12,7 @@ from influx_client import InfluxClient
 
 consumer = KafkaConsumer(
     enable_auto_commit = True,
-    bootstrap_servers=['localhost:9092'],
+    bootstrap_servers=['433-25.csse.rose-hulman.edu:9092'],
     # auto_offset_reset='earliest', # read from the first index
     value_deserializer=lambda m: json.loads(m.decode('utf-8')),
     group_id = 'influx_group',
@@ -22,9 +22,9 @@ consumer = KafkaConsumer(
 topic = TopicPartition('stock_data', 0) #0 is the partition
 consumer.assign([topic])
 
-bucket = "bucket-test"
-org = "organization-test"
-token = "fCD_yfLk_iDUPe52t3Zvel8c8d8PFEKPY7uyvcofi4mPPiBb9yp5sba0j0nP73pVgrE6Y6tLTyLW701OPqCnow=="
+bucket = "stock"
+org = "rhit"
+token = "raewlvUeYdNj58oRvGZWV-Fro9YUQ1RIH3WV2zcJf3UQ5Jk1npRbiiOI48Q9sPQJQVc0mnxB5RMf1LaFwGOygg=="
 
 IC = InfluxClient(token, org, bucket)
 current_offset = -1

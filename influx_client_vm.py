@@ -15,9 +15,6 @@ from influxdb_client import InfluxDBClient
 from influxdb_client.client.write_api import SYNCHRONOUS, ASYNCHRONOUS
 
 # You can generate a Token from the "Tokens Tab" in the UI
-# bucket = "bucket-test"
-# org = "organization-test"
-# token = "fCD_yfLk_iDUPe52t3Zvel8c8d8PFEKPY7uyvcofi4mPPiBb9yp5sba0j0nP73pVgrE6Y6tLTyLW701OPqCnow=="
 bucket = "stock"
 org = "rhit"
 token = "raewlvUeYdNj58oRvGZWV-Fro9YUQ1RIH3WV2zcJf3UQ5Jk1npRbiiOI48Q9sPQJQVc0mnxB5RMf1LaFwGOygg=="
